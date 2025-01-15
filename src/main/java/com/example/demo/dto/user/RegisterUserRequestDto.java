@@ -1,34 +1,30 @@
 package com.example.demo.dto.user;
 
+import com.example.demo.validation.user.Email;
 import com.example.demo.validation.user.FieldMatch;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
-@FieldMatch(first = "password", second = "repeatPassword",
-        message = "The password fields must match")
-public class UserRegistrationRequestDto {
-    @NotBlank
+@FieldMatch.List({
+        @FieldMatch(first = "password", second = "repeatPassword", message = "password don't match")
+})
+public class RegisterUserRequestDto {
     @Email
+    @NotBlank
     private String email;
-
     @NotBlank
-    @Size(min = 6, max = 16, message = "Password must be at least 6 characters long")
+    @Length(min = 6, max = 20,
+            message = "password must contain between 6 and 20 characters")
     private String password;
-
     @NotBlank
-    @Size(min = 6, max = 16, message = "Password must be at least 6 characters long")
     private String repeatPassword;
-
     @NotBlank
     private String firstName;
-
     @NotBlank
     private String lastName;
-
     private String shippingAddress;
 }

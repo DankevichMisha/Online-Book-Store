@@ -1,4 +1,4 @@
-package com.example.demo.validation;
+package com.example.demo.validation.user;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -16,4 +16,10 @@ public @interface FieldMatch {
     Class<? extends Payload>[] payload() default {};
     String first();
     String second();
+
+    @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface List {
+        FieldMatch[] value();
+    }
 }
