@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.dto.user.LoginUserRequestDto;
 import com.example.demo.dto.user.LoginUserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +14,7 @@ public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
-    public LoginUserResponseDto authenticate(LoginUserResponseDto userDto) {
+    public LoginUserResponseDto authenticate(LoginUserRequestDto userDto) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userDto.email(), userDto.password())
         );

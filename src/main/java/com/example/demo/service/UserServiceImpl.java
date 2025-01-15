@@ -6,7 +6,6 @@ import com.example.demo.exception.RegistrationException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public UserResponseDto register(@Valid UserRegistrationRequestDto requestDto)
+    public UserResponseDto register(UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new RegistrationException("User with given email:"

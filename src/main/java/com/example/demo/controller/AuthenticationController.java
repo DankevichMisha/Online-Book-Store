@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.user.LoginUserRequestDto;
 import com.example.demo.dto.user.LoginUserResponseDto;
 import com.example.demo.dto.user.UserRegistrationRequestDto;
 import com.example.demo.dto.user.UserResponseDto;
@@ -29,7 +30,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public LoginUserResponseDto login(@Valid @RequestBody LoginUserResponseDto userDto) {
+    @Operation(summary = "Login user",
+            description = "Authenticates a user and returns JWT token")
+    public LoginUserResponseDto login(@Valid @RequestBody LoginUserRequestDto userDto) {
         return authenticationService.authenticate(userDto);
     }
 }
