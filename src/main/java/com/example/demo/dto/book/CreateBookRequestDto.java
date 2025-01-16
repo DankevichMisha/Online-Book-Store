@@ -1,13 +1,12 @@
 package com.example.demo.dto.book;
 
-import com.example.demo.model.Category;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.ISBN;
@@ -30,5 +29,5 @@ public class CreateBookRequestDto {
     private String description;
     private String coverImage;
     @NotEmpty
-    private Set<Category> categories;
+    private List<Long> categoriesId;
 }
