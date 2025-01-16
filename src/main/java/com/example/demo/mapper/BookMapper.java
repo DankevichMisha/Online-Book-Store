@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 import com.example.demo.config.MapperConfig;
 import com.example.demo.dto.book.BookDto;
+import com.example.demo.dto.book.BookDtoWithoutCategoryIds;
 import com.example.demo.dto.book.CreateBookRequestDto;
 import com.example.demo.model.Book;
 import org.mapstruct.Mapper;
@@ -14,4 +15,8 @@ public interface BookMapper {
     Book toModel(CreateBookRequestDto requestDto);
 
     void updateModelFromDto(@MappingTarget Book book, CreateBookRequestDto bookDto);
+
+    Book toEntity(CreateBookRequestDto bookDto);
+
+    BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 }
