@@ -6,7 +6,7 @@ import com.example.demo.dto.user.UserRegistrationRequestDto;
 import com.example.demo.dto.user.UserResponseDto;
 import com.example.demo.exception.RegistrationException;
 import com.example.demo.security.AuthenticationService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

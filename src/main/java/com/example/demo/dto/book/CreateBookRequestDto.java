@@ -1,10 +1,12 @@
 package com.example.demo.dto.book;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Set;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.ISBN;
@@ -26,4 +28,6 @@ public class CreateBookRequestDto {
             message = "Description must contain 10 symbols")
     private String description;
     private String coverImage;
+    @NotEmpty
+    private Set<Long> categoryIds;
 }
