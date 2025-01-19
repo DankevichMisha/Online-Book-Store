@@ -73,7 +73,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartMapper.toDto(findShoppingCart(user.getId()));
     }
 
-    public void addCartItem(ShoppingCart shoppingCart, Book book, int quantity) {
+    private void addCartItem(ShoppingCart shoppingCart, Book book, int quantity) {
         CartItem cartItem = new CartItem();
         cartItem.setShoppingCart(shoppingCart);
         cartItem.setBook(book);
