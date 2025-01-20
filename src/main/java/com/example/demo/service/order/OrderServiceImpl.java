@@ -34,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
     @Transactional
+    @Override
     public OrderResponseDto placeOrder(User user, PlaceOrderRequestDto placeOrderRequestDto) {
         ShoppingCart shoppingCart = shoppingCartRepository
                 .findByUserIdFetchCartItemsAndBooks(user.getId())
@@ -47,18 +48,11 @@ public class OrderServiceImpl implements OrderService {
                     + " is empty");
         }
 
-        String shippingAddress = getShippingAddress(placeOrderRequestDto, user);
         Order order = createNewOrder(user, cartItems);
-        order.setShippingAddress(shippingAddress);
         orderRepository.save(order);
         cartItems.clear();
         shoppingCartRepository.save(shoppingCart);
         return orderMapper.toDto(order);
-    }
-
-    private String getShippingAddress(PlaceOrderRequestDto requestDto, User user) {
-        return requestDto.shippingAddress() != null && !requestDto.shippingAddress().isBlank()
-                ? requestDto.shippingAddress() : user.getShippingAddress();
     }
 
     @Override

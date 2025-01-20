@@ -43,9 +43,9 @@ public class Order {
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
-    private LocalDateTime orderDate;
+    private LocalDateTime orderDate = LocalDateTime.now();
 
-    @Column(name = "shipping_address", nullable = false)
+    @Column(nullable = false)
     private String shippingAddress;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
