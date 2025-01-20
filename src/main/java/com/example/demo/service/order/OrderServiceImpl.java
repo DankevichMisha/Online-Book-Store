@@ -56,6 +56,11 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(order);
     }
 
+    private String getShippingAddress(PlaceOrderRequestDto requestDto, User user) {
+        return requestDto.shippingAddress() != null && !requestDto.shippingAddress().isBlank()
+                ? requestDto.shippingAddress() : user.getShippingAddress();
+    }
+
     @Override
     public List<OrderResponseDto> getAllOrders(User user) {
         return orderRepository.findAllByUserId(user.getId()).stream()
@@ -115,10 +120,5 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItems(mapCartItemsToOrderItems(cartItems, order));
         order.setTotalPrice(calculateOrderTotalPrice(order.getOrderItems()));
         return order;
-    }
-
-    private String getShippingAddress(PlaceOrderRequestDto requestDto, User user) {
-        return requestDto.shippingAddress() != null && !requestDto.shippingAddress().isBlank()
-                ? requestDto.shippingAddress() : user.getShippingAddress();
     }
 }
