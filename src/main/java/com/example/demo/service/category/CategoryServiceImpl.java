@@ -6,8 +6,9 @@ import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.model.Category;
 import com.example.demo.repository.category.CategoryRepository;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,10 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public Page<CategoryDto> getAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable).map(categoryMapper::toDto);
+    public Set<CategoryDto> getAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable).stream()
+                .map(categoryMapper::toDto)
+                .collect(Collectors.toSet());
     }
 
     @Override

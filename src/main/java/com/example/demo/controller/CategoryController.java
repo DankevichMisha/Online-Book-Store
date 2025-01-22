@@ -5,8 +5,8 @@ import com.example.demo.dto.category.CreateCategoryRequestDto;
 import com.example.demo.service.category.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +30,7 @@ public class CategoryController {
                 description = "Return list of categories as page")
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    public Page<CategoryDto> getAll(Pageable pageable) {
+    public Set<CategoryDto> getAll(Pageable pageable) {
         return categoryService.getAll(pageable);
     }
 

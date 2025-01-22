@@ -5,7 +5,7 @@ import com.example.demo.dto.user.UserResponseDto;
 import com.example.demo.exception.RegistrationException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.book.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
