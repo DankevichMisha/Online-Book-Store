@@ -42,13 +42,13 @@ import org.springframework.web.context.WebApplicationContext;
         "classpath:database/test/categories/delete-categories.sql"},
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class CategoryControllerTest {
+
     public static final Long INVALID_ID = 50L;
+    protected static MockMvc mockMvc;
     private static final Long TEST_CATEGORY_ID = 1L;
     private static final String CATEGORY_ENDPOINT = "/categories";
     private static final String CATEGORY_ENDPOINT_ID = "/categories/{id}";
     private static final String CATEGORY_ID_BOOK_ENDPOINT = "/categories/{id}/books";
-
-    private static MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
