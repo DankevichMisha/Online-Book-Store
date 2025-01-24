@@ -14,9 +14,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class CreateBookRequestDto {
-    @NotBlank(message = "add the title of the book")
+    @NotBlank(message = "Add the title of the book")
     private String title;
-    @NotBlank(message = "add the author of the book")
+    @NotBlank(message = "Add the author of the book")
     private String author;
     @Isbn
     private String isbn;
