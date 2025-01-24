@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Role roleUser = roleRepository.findByName(Role.RoleName.ROLE_USER).orElseThrow(() ->
                 new EntityNotFoundException("Can't find role " + Role.RoleName.ROLE_USER));
-        newUser.setRoles(Set.of(roleUser));
         newUser.setRoles(new HashSet<>(Set.of(roleUser)));
         userRepository.save(newUser);
         shoppingCartService.registerNewShoppingCart(newUser);
