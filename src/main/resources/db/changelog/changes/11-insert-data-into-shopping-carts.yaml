@@ -1,5 +1,6 @@
 databaseChangeLog:
   - changeSet:
+      id: insert-data-into-shopping-carts-table
       author: mihail
       changes:
         - insert:
