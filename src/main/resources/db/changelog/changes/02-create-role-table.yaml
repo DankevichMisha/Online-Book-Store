@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-categories-table
+      id: create-role-table
       author: mihail
       changes:
         - createTable:
-            tableName: categories
+            tableName: roles
             columns:
               - column:
                   name: id
@@ -18,12 +18,4 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
-              - column:
-                  name: description
-                  type: text
-              - column:
-                  name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
+                    unique: true
