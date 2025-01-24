@@ -18,7 +18,6 @@ import com.example.demo.model.Category;
 import com.example.demo.repository.book.BookRepository;
 import com.example.demo.repository.book.BookSpecificationBuilder;
 import com.example.demo.repository.category.CategoryRepository;
-import com.example.demo.service.BookServiceImpl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;

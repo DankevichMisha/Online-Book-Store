@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.book.BookDtoWithoutCategoryIds;
 import com.example.demo.dto.category.CategoryDto;
 import com.example.demo.dto.category.CreateCategoryRequestDto;
-import com.example.demo.service.BookService;
+import com.example.demo.service.book.BookService;
 import com.example.demo.service.category.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

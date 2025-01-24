@@ -53,4 +53,8 @@ public class Book {
 
     @Column(nullable = false, columnDefinition = "TINYINT")
     private boolean isDeleted = false;
+
+    public Book(Long id) {
+        this.id = id;
+    }
 }
