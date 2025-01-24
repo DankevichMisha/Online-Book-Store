@@ -1,1 +1,1 @@
-delete fromm books_categories;
+delete from books_categories;

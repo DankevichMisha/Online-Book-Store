@@ -1,1 +1,1 @@
-delete fromm books;
+delete from books;
