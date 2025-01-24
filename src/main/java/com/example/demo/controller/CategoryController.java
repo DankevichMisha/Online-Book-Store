@@ -81,5 +81,4 @@ public class CategoryController {
                                                                 Pageable pageable) {
         return bookService.getBooksByCategoryId(id, pageable);
     }
-
 }
