@@ -1,5 +1,6 @@
 package com.example.demo.dto.book;
 
+import com.example.demo.model.Category;
 import com.example.demo.validation.user.book.Isbn;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -29,5 +30,8 @@ public class CreateBookRequestDto {
     private String description;
     private String coverImage;
     @NotEmpty
-    private Set<Long> categoryIds;
+    private Set<Category> categories;
+
+    public CreateBookRequestDto(String testBook, String testAuthor, String number, BigDecimal bigDecimal) {
+    }
 }

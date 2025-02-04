@@ -6,9 +6,8 @@ import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.model.Category;
 import com.example.demo.repository.category.CategoryRepository;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +18,15 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public Set<CategoryDto> getAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable).stream()
-                .map(categoryMapper::toDto)
-                .collect(Collectors.toSet());
+    public Page<CategoryDto> getAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable).map(categoryMapper::toDto);
     }
 
     @Override
     public CategoryDto getById(Long id) {
-        Category category = findCategoryById(id);
-        return categoryMapper.toDto(category);
+        return categoryMapper.toDto(categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't find category by id "
+                        + id)));
     }
 
     @Override
@@ -39,19 +37,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto update(Long id, CreateCategoryRequestDto categoryDto) {
-        Category categoryFromDb = findCategoryById(id);
-        categoryMapper.updateCategoryFromDto(categoryDto, categoryFromDb);
-        return categoryMapper.toDto(categoryRepository.save(categoryFromDb));
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find category by id " + id));
+        categoryMapper.updateCategoryFromDto(categoryDto, category);
+        categoryRepository.save(category);
+        return categoryMapper.toDto(category);
     }
 
     @Override
     public void deleteById(Long id) {
-        Category categoryById = findCategoryById(id);
-        categoryRepository.deleteById(categoryById.getId());
-    }
-
-    private Category findCategoryById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Can't find category with id: " + id));
+        categoryRepository.deleteById(id);
     }
 }

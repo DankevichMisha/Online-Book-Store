@@ -7,13 +7,12 @@ import com.example.demo.dto.book.CreateBookRequestDto;
 import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.mapper.BookMapper;
 import com.example.demo.model.Book;
-import com.example.demo.model.Category;
 import com.example.demo.repository.book.BookRepository;
 import com.example.demo.repository.book.BookSpecificationBuilder;
 import com.example.demo.repository.category.CategoryRepository;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -33,11 +32,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll(Pageable pageable) {
-        return bookRepository.findAll(pageable).stream()
-                .map(bookMapper::toDto)
-                .toList();
-
+    public Page<BookDto> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable).map(bookMapper::toDto);
     }
 
     @Override
@@ -48,11 +44,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(Long id, CreateBookRequestDto bookDto) {
-        Set<Category> categories = categoryRepository.findByIdIn(bookDto.getCategoryIds());
-        Book bookFromDb = findBookById(id);
-        bookFromDb.setCategories(categories);
-        bookMapper.updateModelFromDto(bookFromDb, bookDto);
-        return bookMapper.toDto(bookRepository.save(bookFromDb));
+        Book book = bookRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find book by id " + id));
+        bookMapper.updateModelFromDto(book, bookDto);
+        bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 
     @Override

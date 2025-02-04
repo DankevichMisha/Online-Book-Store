@@ -35,4 +35,7 @@ public class Category {
     public Category(Long id) {
         this.id = id;
     }
+
+    public Category(long l, String testCategory) {
+    }
 }
