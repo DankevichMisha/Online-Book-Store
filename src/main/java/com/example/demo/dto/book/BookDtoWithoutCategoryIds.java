@@ -1,15 +1,17 @@
 package com.example.demo.dto.book;
 
 import java.math.BigDecimal;
-import lombok.Data;
 
-@Data
-public class BookDtoWithoutCategoryIds {
-    private Long id;
-    private String title;
-    private String author;
-    private String isbn;
-    private BigDecimal price;
-    private String description;
-    private String coverImage;
+public record BookDtoWithoutCategoryIds(String title,
+                                        String author,
+                                        String isbn,
+                                        BigDecimal price,
+                                        String description,
+                                        String coverImage) {
+
+    // Неконструктивный конструктор должен инициализировать все поля
+    public BookDtoWithoutCategoryIds(long id, String testBook) {
+        this(testBook, "Unknown Author", "Unknown ISBN", BigDecimal.ZERO,
+                "No Description", "No Image");
+    }
 }

@@ -8,7 +8,7 @@ import com.example.demo.model.Book;
 import com.example.demo.model.CartItem;
 import com.example.demo.model.ShoppingCart;
 import com.example.demo.model.User;
-import com.example.demo.repository.BookRepository;
+import com.example.demo.repository.book.BookRepository;
 import com.example.demo.repository.cartitem.CartItemRepository;
 import com.example.demo.repository.shoppingcart.ShoppingCartRepository;
 import jakarta.persistence.EntityNotFoundException;

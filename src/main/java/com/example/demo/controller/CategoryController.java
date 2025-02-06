@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.book.BookDtoWithoutCategoryIds;
 import com.example.demo.dto.category.CategoryDto;
 import com.example.demo.dto.category.CreateCategoryRequestDto;
+import com.example.demo.service.book.BookService;
 import com.example.demo.service.category.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;
+    private final BookService bookService;
 
     @Operation(summary = "Find all categories",
                 description = "Return list of categories as page")
@@ -68,5 +72,13 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteById(id);
+    }
+
+    @GetMapping("/{id}/books")
+    @Operation(summary = "Get books by category id",
+            description = "Displays all books by category id")
+    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id,
+                                                                Pageable pageable) {
+        return bookService.getBooksByCategoryId(id, pageable);
     }
 }
