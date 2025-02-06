@@ -32,6 +32,7 @@ public class CreateBookRequestDto {
     @NotEmpty
     private Set<Category> categories;
 
-    public CreateBookRequestDto(String testBook, String testAuthor, String number, BigDecimal bigDecimal) {
+    public CreateBookRequestDto(String testBook, String testAuthor,
+                                String number, BigDecimal bigDecimal) {
     }
 }

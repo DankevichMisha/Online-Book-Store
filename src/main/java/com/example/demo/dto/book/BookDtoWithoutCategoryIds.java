@@ -11,7 +11,7 @@ public record BookDtoWithoutCategoryIds(String title,
 
     // Неконструктивный конструктор должен инициализировать все поля
     public BookDtoWithoutCategoryIds(long id, String testBook) {
-        this(testBook, "Unknown Author", "Unknown ISBN", BigDecimal.ZERO
-                , "No Description", "No Image");
+        this(testBook, "Unknown Author", "Unknown ISBN", BigDecimal.ZERO,
+                "No Description", "No Image");
     }
 }

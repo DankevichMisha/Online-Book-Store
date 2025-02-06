@@ -1,25 +1,32 @@
 package com.example.demo.service.category;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import com.example.demo.ShopApplication;
 import com.example.demo.dto.category.CategoryDto;
 import com.example.demo.dto.category.CreateCategoryRequestDto;
 import com.example.demo.exception.EntityNotFoundException;
 import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.model.Category;
 import com.example.demo.repository.category.CategoryRepository;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
+@SpringBootTest(classes = ShopApplication.class)
 class CategoryServiceImplTest {
 
     @Mock
@@ -87,7 +94,8 @@ class CategoryServiceImplTest {
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> categoryService.getById(categoryId));
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> categoryService.getById(categoryId));
         assertEquals("Can't find category by id " + categoryId, exception.getMessage());
     }
 
@@ -136,7 +144,8 @@ class CategoryServiceImplTest {
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> categoryService.update(categoryId, categoryRequestDto));
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> categoryService.update(categoryId, categoryRequestDto));
         assertEquals("Can't find category by id " + categoryId, exception.getMessage());
     }
 

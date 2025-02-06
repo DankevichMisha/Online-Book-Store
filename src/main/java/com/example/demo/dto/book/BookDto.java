@@ -18,6 +18,7 @@ public class BookDto {
     private String coverImage;
     private Set<Category> categories;
 
-    public BookDto(long l, String testBook, String testAuthor, String number, BigDecimal bigDecimal) {
+    public BookDto(long l, String testBook, String testAuthor,
+                   String number, BigDecimal bigDecimal) {
     }
 }

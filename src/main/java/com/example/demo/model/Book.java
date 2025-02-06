@@ -58,6 +58,7 @@ public class Book {
         this.id = id;
     }
 
-    public Book(long l, String testBook, String testAuthor, String number, BigDecimal bigDecimal, Object o) {
+    public Book(long l, String testBook, String testAuthor,
+                String number, BigDecimal bigDecimal, Object o) {
     }
 }

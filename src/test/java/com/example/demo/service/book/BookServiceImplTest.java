@@ -1,5 +1,13 @@
 package com.example.demo.service.book;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.example.demo.dto.book.BookDto;
 import com.example.demo.dto.book.BookDtoWithoutCategoryIds;
 import com.example.demo.dto.book.BookSearchParameters;
@@ -10,19 +18,21 @@ import com.example.demo.model.Book;
 import com.example.demo.repository.book.BookRepository;
 import com.example.demo.repository.book.BookSpecificationBuilder;
 import com.example.demo.repository.category.CategoryRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.*;
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.domain.Specification;
-
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
+@WebMvcTest(BookServiceImpl.class)
 class BookServiceImplTest {
 
     @Mock
@@ -49,10 +59,14 @@ class BookServiceImplTest {
     @BeforeEach
     void setUp() {
         // Создаём объекты для тестов
-        book = new Book(1L, "Test Book", "Test Author", "1234567890123", BigDecimal.valueOf(19.99), null);
-        bookDto = new BookDto(1L, "Test Book", "Test Author", "1234567890123", BigDecimal.valueOf(19.99));
-        createBookRequestDto = new CreateBookRequestDto("Test Book", "Test Author", "1234567890123", BigDecimal.valueOf(19.99));
-        bookSearchParameters = new BookSearchParameters("Test Book", "Test Author");
+        book = new Book(1L, "Test Book", "Test Author",
+                "1234567890123", BigDecimal.valueOf(19.99), null);
+        bookDto = new BookDto(1L, "Test Book", "Test Author",
+                "1234567890123", BigDecimal.valueOf(19.99));
+        createBookRequestDto = new CreateBookRequestDto("Test Book",
+                "Test Author", "1234567890123", BigDecimal.valueOf(19.99));
+        bookSearchParameters = new BookSearchParameters("Test Book",
+                "Test Author");
         pageable = PageRequest.of(0, 10);
     }
 
@@ -118,7 +132,8 @@ class BookServiceImplTest {
         when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> bookService.findById(bookId));
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> bookService.findById(bookId));
         assertEquals("Can't find book by id: " + bookId, exception.getMessage());
     }
 
@@ -129,7 +144,8 @@ class BookServiceImplTest {
         when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> bookService.update(bookId, createBookRequestDto));
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> bookService.update(bookId, createBookRequestDto));
         assertEquals("Can't find book by id " + bookId, exception.getMessage());
     }
 
@@ -151,7 +167,8 @@ class BookServiceImplTest {
     void search_ShouldReturnListOfBookDtos() {
         // Arrange
         List<Book> bookList = List.of(book);
-        when(bookSpecificationBuilder.build(bookSearchParameters)).thenReturn(Specification.where(null));  // Подразумеваем, что спецификация возвращает корректные книги
+        when(bookSpecificationBuilder.build(bookSearchParameters))
+                .thenReturn(Specification.where(null));
         when(bookRepository.findAll(any(Specification.class))).thenReturn(bookList);
         when(bookMapper.toDto(book)).thenReturn(bookDto);
 
@@ -172,10 +189,12 @@ class BookServiceImplTest {
         Long categoryId = 1L;
         List<Book> bookList = List.of(book);
         when(bookRepository.findAllByCategoriesId(categoryId, pageable)).thenReturn(bookList);
-        when(bookMapper.toDtoWithoutCategories(book)).thenReturn(new BookDtoWithoutCategoryIds(1L, "Test Book"));
+        when(bookMapper.toDtoWithoutCategories(book))
+                .thenReturn(new BookDtoWithoutCategoryIds(1L, "Test Book"));
 
         // Act
-        List<BookDtoWithoutCategoryIds> result = bookService.getBooksByCategoryId(categoryId, pageable);
+        List<BookDtoWithoutCategoryIds> result = bookService
+                .getBooksByCategoryId(categoryId, pageable);
 
         // Assert
         assertNotNull(result);

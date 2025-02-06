@@ -1,28 +1,33 @@
 package com.example.demo.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.example.demo.dto.book.BookDto;
 import com.example.demo.dto.book.BookSearchParameters;
 import com.example.demo.dto.book.CreateBookRequestDto;
 import com.example.demo.service.book.BookService;
+import java.awt.print.Pageable;
+import java.math.BigDecimal;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.*;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import java.awt.print.Pageable;
-import java.math.BigDecimal;
-import java.util.List;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookController.class)
 class BookControllerTest {
@@ -40,8 +45,10 @@ class BookControllerTest {
 
     @BeforeEach
     void setUp() {
-        bookDto = new BookDto(1L, "Test Book", "Test Author", "1234567890123", BigDecimal.valueOf(19.99));
-        createBookRequestDto = new CreateBookRequestDto("Test Book", "Test Author", "1234567890123", BigDecimal.valueOf(19.99));
+        bookDto = new BookDto(1L, "Test Book", "Test Author",
+                "1234567890123", BigDecimal.valueOf(19.99));
+        createBookRequestDto = new CreateBookRequestDto("Test Book", "Test Author",
+                "1234567890123", BigDecimal.valueOf(19.99));
         pageable = (Pageable) PageRequest.of(0, 10);
         bookSearchParameters = new BookSearchParameters("Test Book", "Test Author");
     }
@@ -85,7 +92,8 @@ class BookControllerTest {
         // Act & Assert
         mockMvc.perform(post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"Test Book\", \"author\":\"Test Author\", \"isbn\":\"1234567890123\", \"price\":19.99}"))
+                        .content("{\"title\":\"Test Book\", \"author\":\"Test Author\""
+                                + ", \"isbn\":\"1234567890123\", \"price\":19.99}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(bookDto.getTitle()))
                 .andExpect(jsonPath("$.author").value(bookDto.getAuthor()));
@@ -112,7 +120,8 @@ class BookControllerTest {
         // Act & Assert
         mockMvc.perform(put("/books/{id}", bookId)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\":\"Updated Book\", \"author\":\"Updated Author\", \"isbn\":\"1234567890123\", \"price\":25.99}"))
+                        .content("{\"title\":\"Updated Book\", \"author\":\"Updated Author\""
+                                + ", \"isbn\":\"1234567890123\", \"price\":25.99}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value(bookDto.getTitle()))
                 .andExpect(jsonPath("$.author").value(bookDto.getAuthor()));

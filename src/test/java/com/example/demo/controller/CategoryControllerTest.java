@@ -1,10 +1,23 @@
 package com.example.demo.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.example.demo.dto.book.BookDtoWithoutCategoryIds;
 import com.example.demo.dto.category.CategoryDto;
 import com.example.demo.dto.category.CreateCategoryRequestDto;
 import com.example.demo.service.book.BookService;
 import com.example.demo.service.category.CategoryService;
+import java.awt.print.Pageable;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +30,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
-
-import java.awt.print.Pageable;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CategoryController.class)
 class CategoryControllerTest {
@@ -128,7 +130,8 @@ class CategoryControllerTest {
         // Arrange
         Long categoryId = 1L;
         List<BookDtoWithoutCategoryIds> books = List.of(bookDtoWithoutCategoryIds);
-        when(bookService.getBooksByCategoryId(categoryId, (org.springframework.data.domain.Pageable) pageable)).thenReturn(books);
+        when(bookService.getBooksByCategoryId(categoryId,
+                (org.springframework.data.domain.Pageable) pageable)).thenReturn(books);
 
         // Act & Assert
         mockMvc.perform(get("/categories/{id}/books", categoryId)
