@@ -4,9 +4,12 @@ import com.example.demo.model.Category;
 import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
+@NoArgsConstructor
 @Accessors(chain = true)
 public class BookDto {
     private Long id;

@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 public interface BookService {
     BookDto save(CreateBookRequestDto bookDto);
 
-    Page<BookDto> findAll(Pageable pageable);
+    List<BookDto> findAll(Pageable pageable);
 
     BookDto findById(Long id);
 
