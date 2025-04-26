@@ -9,8 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@FieldMatch(first = "password", second = "repeatPassword",
-        message = "The password fields must match")
+@FieldMatch.List({
+        @FieldMatch(first = "password", second = "repeatPassword", message = "password don't match")
+})
 public class UserRegistrationRequestDto {
     @NotBlank
     @Email
@@ -21,7 +22,6 @@ public class UserRegistrationRequestDto {
     private String password;
 
     @NotBlank
-    @Size(min = 6, max = 16, message = "Password must be at least 6 characters long")
     private String repeatPassword;
 
     @NotBlank

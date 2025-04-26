@@ -1,10 +1,14 @@
 package com.example.demo.dto.cartitem;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
+@EqualsAndHashCode
+@Accessors(chain = true)
 public class CartItemResponseDto {
     private Long cartItemId;
     private Long bookId;

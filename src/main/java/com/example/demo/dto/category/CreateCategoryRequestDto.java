@@ -8,4 +8,7 @@ public class CreateCategoryRequestDto {
     @NotBlank
     private String name;
     private String description;
+
+    public CreateCategoryRequestDto(String testCategory) {
+    }
 }

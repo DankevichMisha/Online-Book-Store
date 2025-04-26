@@ -1,5 +1,7 @@
 package com.example.demo.dto.book;
 
+import com.example.demo.model.Category;
+import com.example.demo.validation.user.book.Isbn;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -9,16 +11,15 @@ import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.validator.constraints.ISBN;
 
 @Data
 @Accessors(chain = true)
 public class CreateBookRequestDto {
-    @NotBlank(message = "add the title of the book")
+    @NotBlank(message = "Add the title of the book")
     private String title;
-    @NotBlank(message = "add the author of the book")
+    @NotBlank(message = "Add the author of the book")
     private String author;
-    @ISBN
+    @Isbn
     private String isbn;
     @NotNull(message = "price can't be null")
     @Positive(message = "price can't be less than 1")
@@ -29,5 +30,9 @@ public class CreateBookRequestDto {
     private String description;
     private String coverImage;
     @NotEmpty
-    private Set<Long> categoryIds;
+    private Set<Category> categories;
+
+    public CreateBookRequestDto(String testBook, String testAuthor,
+                                String number, BigDecimal bigDecimal) {
+    }
 }
